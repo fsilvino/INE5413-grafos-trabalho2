@@ -5,7 +5,7 @@ class Grafo:
 
     def __init__(self):
         self.__reset()
-        self.lerArquivo("agm_tiny_aresta.net")
+        self.lerArquivo("arquivos-teste/agm_tiny_aresta.net")
 
     def __reset(self):
         self.vertices = []
