@@ -62,6 +62,7 @@ class Grafo:
                 # criamos uma única vez a representação da relação e adicionamos ela
                 # em ambos os vértices
 
+                ### TENTAR EVITAR ESSA CONDICAO DENTRO DO LOOP
                 if linhas[self.numeroDeVertices + 1].strip().lower() == "*edges":
                     self.direcionado = False
                     relacao = Aresta(v1, v2, peso)
