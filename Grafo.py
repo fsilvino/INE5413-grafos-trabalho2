@@ -13,13 +13,13 @@ class Grafo:
         self.carregado = False
 
     def mostrarGrafo(self):
-        self.__validarSeFoiCarregado()
+        self.validarSeFoiCarregado()
         tipoGrafo = "Grafo não direcionado"
         if self.direcionado:
             tipoGrafo = "Grafo direcionado"
         print(tipoGrafo)
         for v in self.vertices:
-            print(str(v.numero) + ": " + ", ".join(map(lambda r: str(r.obterOutraParte(v).numero), v.arestas.values())))
+            print(str(v.numero) + ": " + ", ".join(map(lambda r: str(r.obterOutraParte(v).numero), v.relacoes.values())))
 
     def lerArquivo(self, arquivo):
         self.__reset()
@@ -30,7 +30,7 @@ class Grafo:
         self.__lerRelacoes(linhas)
         self.carregado = True
 
-    def __validarSeFoiCarregado(self):
+    def validarSeFoiCarregado(self):
         if not self.carregado:
             raise Exception("Nenhum arquivo foi carregado! Primeiro carregue um arquivo para poder executar operações no grafo")
 

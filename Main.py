@@ -1,6 +1,8 @@
 from Grafo import Grafo
+from GrafoExecutor import GrafoExecutor
 
 g = Grafo()
+exec = GrafoExecutor()
 
 def solicitarOpcao(texto, min, max, maxTentativas = 3):
     tentativas = 1
@@ -20,7 +22,7 @@ def solicitarOpcao(texto, min, max, maxTentativas = 3):
 
 def solicitarVertice(texto="Digite o número do vertice: "):
     try:
-        v = solicitarOpcao(texto, 1, g.qtdVertices())
+        v = solicitarOpcao(texto, 1, exec.qtdVertices(g))
         if v > 0:
             return v
         else:
@@ -50,10 +52,52 @@ def mostrarGrafo():
         print(ex)
 
 
+def mostrarQtdVertices():
+    numVertices = exec.qtdVertices(g)
+    print("O grafo tem " + str(numVertices) + " vertices.")
+
+def mostrarQtdRelacoes():
+    numRelacoes = exec.qtdRelacoes(g)
+    print("O grafo tem " + str(numRelacoes) + " arestas.")
+
+def verGrau():
+    v = solicitarVertice()
+    if v > 0:
+        grau = exec.grau(g, v)
+        print(f'Grau do vértice {v}:', grau)
+
+def verRotulo():
+    v = solicitarVertice()
+    if v > 0:
+        rotulo = exec.rotulo(g, v)
+        print(f'Rótulo do vértice {v}:', rotulo)
+
+def verVizinhos():
+    v = solicitarVertice()
+    if v > 0:
+        vizinhos = exec.vizinhos(g, v)
+        print(f'Vizinhos do vértice {v}:', ", ".join(map(lambda v: str(v.numero), vizinhos)))
+
+def verificarSeHaRelacao():
+    v = solicitarVertice("Digite o número do primeiro vértice: ")
+    u = solicitarVertice("Digite o número do segundo vértice: ")
+    if v > 0 and u > 0:
+        haRelacao = exec.haRelacao(g, u, v)
+        nao = "" if haRelacao else " não"
+        print(f'O vértice {v}{nao} possui uma relacao para {u}')
+
+
+
 # lista com funcoes que serao executadas
 acoes = [
     {"texto": "Carregar um arquivo", "funcao": carregarArquivo},
     {"texto": "Mostrar o grafo", "funcao": mostrarGrafo},
+    {"texto": "Ver a quantidade de Vértices", "funcao": mostrarQtdVertices},
+    {"texto": "Ver a quantidade de Relacoes", "funcao": mostrarQtdRelacoes},
+    {"texto": "Grau do vértice", "funcao": verGrau},
+    {"texto": "Rótulo do vértice", "funcao": verRotulo},
+    {"texto": "Vizinhos do vértice", "funcao": verVizinhos},
+    {"texto": "Verificar se há relacao", "funcao": verificarSeHaRelacao},
 ]
 
 user_input = -1
