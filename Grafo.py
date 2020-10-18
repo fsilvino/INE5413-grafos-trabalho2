@@ -1,11 +1,12 @@
 from Vertice import Vertice
 from Aresta import Aresta
+from Arco import Arco
 
 class Grafo:
 
     def __init__(self):
         self.__reset()
-        self.lerArquivo("arquivos-teste/agm_tiny_aresta.net")
+        self.lerArquivo("arquivos-teste/agm_tiny_arco.net")
 
     def __reset(self):
         self.vertices = []
@@ -13,6 +14,10 @@ class Grafo:
 
     def mostrarGrafo(self):
         self.__validarSeFoiCarregado()
+        tipoGrafo = "Grafo não direcionado"
+        if self.direcionado:
+            tipoGrafo = "Grafo direcionado"
+        print(tipoGrafo)
         for v in self.vertices:
             print(str(v.numero) + ": " + ", ".join(map(lambda r: str(r.obterOutraParte(v).numero), v.arestas.values())))
 
@@ -43,6 +48,8 @@ class Grafo:
 
     def __lerArestas(self, linhas):
         self.numeroDeArestas = 0
+        # print(linhas[self.numeroDeVertices + 1])
+        # self.direcionado = True
         for i in range(self.numeroDeVertices + 2, len(linhas)):
             valores = linhas[i].split(" ")
 
@@ -52,11 +59,16 @@ class Grafo:
             if (len(valores) >= 3):
                 peso = float(valores[2])
 
-            # visando economizar memória, por ser um grafo não dirigido,
-            # criamos uma única vez a representação da relação e adicionamos ela
-            # em ambos os vértices
-            aresta = Aresta(v1, v2, peso)
-            v1.adicionarAresta(aresta)
-            v2.adicionarAresta(aresta)
+                # visando economizar memória, por ser um grafo não dirigido,
+                # criamos uma única vez a representação da relação e adicionamos ela
+                # em ambos os vértices
 
-            self.numeroDeArestas = self.numeroDeArestas + 1
+                if linhas[self.numeroDeVertices + 1].strip().lower() == "*edges":
+                    relacao = Aresta(v1, v2, peso)
+                    v2.adicionarAresta(relacao)
+                else:
+                    relacao = Arco(v1, v2, peso)
+
+                v1.adicionarAresta(relacao)
+
+                self.numeroDeArestas = self.numeroDeArestas + 1
