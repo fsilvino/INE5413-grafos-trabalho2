@@ -27,7 +27,7 @@ class Grafo:
         linhas = f.readlines()
         f.close()
         self.__lerVertices(linhas)
-        self.__lerArestas(linhas)
+        self.__lerRelacoes(linhas)
         self.carregado = True
 
     def __validarSeFoiCarregado(self):
@@ -46,10 +46,9 @@ class Grafo:
             self.vertices.append(Vertice(numeroVertice, rotulo))
 
 
-    def __lerArestas(self, linhas):
-        self.numeroDeArestas = 0
+    def __lerRelacoes(self, linhas):
+        self.numeroDeRelacoes = 0
         # print(linhas[self.numeroDeVertices + 1])
-        # self.direcionado = True
         for i in range(self.numeroDeVertices + 2, len(linhas)):
             valores = linhas[i].split(" ")
 
@@ -64,11 +63,13 @@ class Grafo:
                 # em ambos os vértices
 
                 if linhas[self.numeroDeVertices + 1].strip().lower() == "*edges":
+                    self.direcionado = False
                     relacao = Aresta(v1, v2, peso)
-                    v2.adicionarAresta(relacao)
+                    v2.adicionarRelacao(relacao)
                 else:
+                    self.direcionado = True
                     relacao = Arco(v1, v2, peso)
 
-                v1.adicionarAresta(relacao)
+                v1.adicionarRelacao(relacao)
 
-                self.numeroDeArestas = self.numeroDeArestas + 1
+                self.numeroDeRelacoes = self.numeroDeRelacoes + 1
