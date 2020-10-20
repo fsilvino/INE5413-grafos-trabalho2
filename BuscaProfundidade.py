@@ -16,6 +16,7 @@ class BuscaProfundidade:
 
         return (visitados, tempoInicio, tempoFim, tempo)
 
+
     def dfs_visit(self, grafo, vertice, visitados, tempoInicio, tempoFim, ancestrais, tempo):
         posVertice = vertice.numero - 1
         visitados[posVertice] = True # marca vertice como visitados
@@ -29,3 +30,6 @@ class BuscaProfundidade:
 
         tempo += 1
         tempoFim[posVertice] = tempo # adiciona tempo ao array "tempoFim", na posicao do vertice
+
+
+    dfs = staticmethod(dfs)
