@@ -1,7 +1,14 @@
-from Grafo import Grafo
+# from Grafo import Grafo
 from GrafoExecutor import GrafoExecutor
+from GrafoDirigido import GrafoDirigido
+from GrafoNaoDirigido import GrafoNaoDirigido
+from LeitorGrafo import LeitorGrafo
 
-g = Grafo()
+# g = Grafo()
+arquivo = "arquivos-teste/manha_ord_topologica.net"
+# arquivo = "arquivos-teste/agm_tiny_aresta.net"
+# arquivo = "arquivos-teste/agm_tiny_arco.net"
+g = LeitorGrafo.lerGrafoDoArquivo(arquivo)
 exec = GrafoExecutor()
 
 def solicitarOpcao(texto, min, max, maxTentativas = 3):

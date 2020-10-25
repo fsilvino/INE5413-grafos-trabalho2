@@ -1,4 +1,3 @@
-from Aresta import Aresta
 from Relacao import Relacao
 
 class Vertice:

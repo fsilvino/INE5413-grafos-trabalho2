@@ -10,8 +10,8 @@ class GrafoDirigido(Grafo):
         id = self.gerarIdRelacao(v1, v2)
         relacao = Arco(id, v1, v2, peso)
         self.relacoes[id] = relacao
-        self.vertices[v1].adicionarRelacao(relacao)
-        self.vertices[v2].adicionarRelacao(relacao)
+        self.vertices[v1.numero - 1].adicionarRelacao(relacao)
+        self.vertices[v2.numero - 1].adicionarRelacao(relacao)
 
     def obterTipoGrafo(self):
         return "Grafo dirigido"
