@@ -1,4 +1,5 @@
 from Grafo import Grafo
+from OrdenacaoTopologica import OrdenacaoTopologica
 
 class GrafoExecutor:
 
@@ -31,3 +32,8 @@ class GrafoExecutor:
         grafo.validarSeFoiCarregado()
         relacao = grafo.vertices[u - 1].encontrarRelacaoPara(grafo.vertices[v - 1])
         return relacao.peso if relacao != None else float("inf")
+
+    def ordenacaoTopologica(self, grafo:Grafo):
+        grafo.validarSeFoiCarregado()
+        ord = OrdenacaoTopologica()
+        return ord.ordenar(grafo)
