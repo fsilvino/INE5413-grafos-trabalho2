@@ -1,7 +1,7 @@
 class OrdenacaoTopologica:
 
     def ordenar(self, grafo):
-        if grafo.obterTipoGrafo != 'Grafo dirigido':
+        if grafo.obterTipoGrafo() != 'Grafo dirigido':
             raise Exception("Ordenação topologica funciona apenas com grafos dirigidos.")
 
         qtdVertices = grafo.qtdVertices()
