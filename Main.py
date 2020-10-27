@@ -8,7 +8,8 @@ from LeitorGrafo import LeitorGrafo
 arquivo = "arquivos-teste/manha_ord_topologica.net"
 # arquivo = "arquivos-teste/agm_tiny_aresta.net"
 # arquivo = "arquivos-teste/agm_tiny_arco.net"
-g = LeitorGrafo.lerGrafoDoArquivo(arquivo)
+global grafo
+grafo = LeitorGrafo.lerGrafoDoArquivo(arquivo)
 exec = GrafoExecutor()
 
 def solicitarOpcao(texto, min, max, maxTentativas = 3):
@@ -44,8 +45,8 @@ def carregarArquivo():
     try:
         if arquivo == "":
             arquivo = arquivoPadrao
-
-        g.lerArquivo(arquivo)
+        global grafo
+        grafo = LeitorGrafo.lerGrafoDoArquivo(arquivo)
         print("Arquivo " + arquivo + " carregado com sucesso.")
     except Exception as ex:
         print("Não foi possível ler o arquivo!")
@@ -54,48 +55,51 @@ def carregarArquivo():
 def mostrarGrafo():
     try:
         print('Mostrando o grafo:')
-        g.mostrarGrafo()
+        grafo.mostrarGrafo()
     except Exception as ex:
         print(ex)
 
 
 def mostrarQtdVertices():
-    numVertices = exec.qtdVertices(g)
+    numVertices = exec.qtdVertices(grafo)
     print("O grafo tem " + str(numVertices) + " vertices.")
 
 def mostrarQtdRelacoes():
-    numRelacoes = exec.qtdRelacoes(g)
+    numRelacoes = exec.qtdRelacoes(grafo)
     print("O grafo tem " + str(numRelacoes) + " arestas.")
 
 def verGrau():
     v = solicitarVertice()
     if v > 0:
-        grau = exec.grau(g, v)
+        grau = exec.grau(grafo, v)
         print(f'Grau do vértice {v}:', grau)
 
 def verRotulo():
     v = solicitarVertice()
     if v > 0:
-        rotulo = exec.rotulo(g, v)
+        rotulo = exec.rotulo(grafo, v)
         print(f'Rótulo do vértice {v}:', rotulo)
 
 def verVizinhos():
     v = solicitarVertice()
     if v > 0:
-        vizinhos = exec.vizinhos(g, v)
+        vizinhos = exec.vizinhos(grafo, v)
         print(f'Vizinhos do vértice {v}:', ", ".join(map(lambda v: str(v.numero), vizinhos)))
 
 def verificarSeHaRelacao():
     v = solicitarVertice("Digite o número do primeiro vértice: ")
     u = solicitarVertice("Digite o número do segundo vértice: ")
     if v > 0 and u > 0:
-        haRelacao = exec.haRelacao(g, u, v)
+        haRelacao = exec.haRelacao(grafo, u, v)
         nao = "" if haRelacao else " não"
         print(f'O vértice {v}{nao} possui uma relacao para {u}')
 
 
 def ordenacaoTopologica():
-    exec.ordenacaoTopologica(g)
+    try:
+        exec.ordenacaoTopologica(grafo)
+    except Exception as ex:
+        print(ex)
 
 # lista com funcoes que serao executadas
 acoes = [
@@ -112,7 +116,7 @@ acoes = [
 
 user_input = -1
 while user_input != 0:
-    try:
+
         print()
         print("Menu: ")
         for i, acao in enumerate(acoes):
@@ -128,10 +132,6 @@ while user_input != 0:
             input('Pressione ENTER para continuar...')
         else:
             user_input = 0
-    except Exception as ex:
-        print(ex)
-        print()
-        input('Pressione ENTER para continuar...')
 
 # fim while
 print()
