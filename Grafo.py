@@ -8,7 +8,6 @@ class Grafo(ABC):
     def __init__(self, vertices):
         self.vertices = vertices # tipo vetor
         self.relacoes = {}
-        self.carregado = False
 
     @abstractmethod
     def gerarIdRelacao(self, v1, v2):
@@ -33,10 +32,6 @@ class Grafo(ABC):
 
     def vizinhos(self, v: int):
         pass
-
-    def validarSeFoiCarregado(self):
-        if not self.carregado:
-            raise Exception("Nenhum arquivo foi carregado! Primeiro carregue um arquivo para poder executar operações no grafo")
 
     def mostrarGrafo(self):
         print(self.obterTipoGrafo())

@@ -22,7 +22,6 @@ class LeitorGrafo:
             raise Exception("Não foi possível identificar o tipo de grafo")
 
         LeitorGrafo.__lerRelacoes(linhas[numeroDeVertices + 2:], grafo)
-        grafo.carregado = True
         return grafo
     lerGrafoDoArquivo = staticmethod(lerGrafoDoArquivo)
 
