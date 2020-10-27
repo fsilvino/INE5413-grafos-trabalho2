@@ -94,6 +94,8 @@ def verificarSeHaRelacao():
         print(f'O vértice {v}{nao} possui uma relacao para {u}')
 
 
+def ordenacaoTopologica():
+    exec.ordenacaoTopologica(g)
 
 # lista com funcoes que serao executadas
 acoes = [
@@ -105,25 +107,31 @@ acoes = [
     {"texto": "Rótulo do vértice", "funcao": verRotulo},
     {"texto": "Vizinhos do vértice", "funcao": verVizinhos},
     {"texto": "Verificar se há relacao", "funcao": verificarSeHaRelacao},
+    {"texto": "Ordenacao Topologica", "funcao": ordenacaoTopologica},
 ]
 
 user_input = -1
 while user_input != 0:
-    print()
-    print("Menu: ")
-    for i, acao in enumerate(acoes):
-        print(str(i + 1) +" - " + acao["texto"])
-    print("0 - Finalizar o programa")
-    print()
+    try:
+        print()
+        print("Menu: ")
+        for i, acao in enumerate(acoes):
+            print(str(i + 1) +" - " + acao["texto"])
+        print("0 - Finalizar o programa")
+        print()
 
-    user_input = solicitarOpcao("Digite a opção desejada: ", 0, len(acoes))
-    print()
-    if user_input > 0:
-        acoes[user_input - 1]["funcao"]()
+        user_input = solicitarOpcao("Digite a opção desejada: ", 0, len(acoes))
+        print()
+        if user_input > 0:
+            acoes[user_input - 1]["funcao"]()
+            print()
+            input('Pressione ENTER para continuar...')
+        else:
+            user_input = 0
+    except Exception as ex:
+        print(ex)
         print()
         input('Pressione ENTER para continuar...')
-    else:
-        user_input = 0
 
 # fim while
 print()
