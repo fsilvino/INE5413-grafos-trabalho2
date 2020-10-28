@@ -18,6 +18,7 @@ class OrdenacaoTopologica:
             if not visitados[posVertice]:
                 visitados[posVertice] = True
                 result = self.dfs_visit(grafo, v, visitados, tempoEntrada, tempoSaida, tempo, listaOrdenada)
+                # essa parte abaixo eh omitida nas anotacoes da disciplica, mas eh necessaria para o algoritmo funcionar
                 visitados = result[0]
                 tempoEntrada = result[1]
                 tempoSaida = result[2]
@@ -37,6 +38,7 @@ class OrdenacaoTopologica:
             posVertice = v.numero - 1
             if not visitados[posVertice]:
                 result = self.dfs_visit(grafo, v, visitados, tempoEntrada, tempoSaida, tempo, listaOrdenada)
+                # essa parte abaixo eh omitida nas anotacoes da disciplica, mas eh necessaria para o algoritmo funcionar
                 visitados = result[0]
                 tempoEntrada = result[1]
                 tempoSaida = result[2]
@@ -46,6 +48,7 @@ class OrdenacaoTopologica:
         tempo += 1
         tempoSaida[posVerticeOrigem] = tempo # adiciona tempo ao array "tempoFim", na posicao do vertice
         listaOrdenada.insert(0, verticeOrigem) # insere vertice analisado à esquerda da lista
+        # essa retorno eh omitido nas anotacoes da disciplica, mas eh necessaria para o algoritmo funcionar
         return (visitados, tempoEntrada, tempoSaida, tempo, listaOrdenada)
 
     def show_result(self, lista):
