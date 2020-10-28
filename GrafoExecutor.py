@@ -1,6 +1,8 @@
 from Grafo import Grafo
+from GrafoDirigido import GrafoDirigido
 from OrdenacaoTopologica import OrdenacaoTopologica
 from ArvoreGeradoraMinima import ArvoreGeradoraMinima
+from Conectividade import Conectividade
 
 class GrafoExecutor:
 
@@ -37,3 +39,7 @@ class GrafoExecutor:
         arvore = ArvoreGeradoraMinima()
         a = arvore.montaArvore(grafo)
         arvore.show_result(a)
+
+    def conexos(self, grafo:Grafo):
+        con = Conectividade()
+        con.FortementeConexos(grafo)
