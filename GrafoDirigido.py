@@ -11,6 +11,7 @@ class GrafoDirigido(Grafo):
         relacao = Arco(id, v1, v2, peso)
         self.relacoes[id] = relacao
         self.vertices[v1.numero - 1].adicionarRelacao(relacao)
+        # Verificar se eh necessario adcionar a vertice destino. Sem essa relacao no vertice destino, facilita a organizacao topologica
         self.vertices[v2.numero - 1].adicionarRelacao(relacao)
 
     def obterTipoGrafo(self):
