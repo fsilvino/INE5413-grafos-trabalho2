@@ -28,26 +28,29 @@ class OrdenacaoTopologica:
         return listaOrdenada
         # self.show_result(listaOrdenada)
 
-    def dfs_visit(self, grafo, verticeOrigem, visitados, tempoEntrada, tempoSaida, tempo, listaOrdenada):
-        posVerticeOrigem = verticeOrigem.numero - 1
+    def dfs_visit(self, grafo, verticeBase, visitados, tempoEntrada, tempoSaida, tempo, listaOrdenada):
+        posVerticeOrigem = verticeBase.numero - 1
         visitados[posVerticeOrigem] = True
         tempo += 1
         tempoEntrada[posVerticeOrigem] = tempo
-        # for v in grafo.vertices.arestas.values():
-        for v in grafo.vertices:
-            posVertice = v.numero - 1
-            if not visitados[posVertice]:
-                result = self.dfs_visit(grafo, v, visitados, tempoEntrada, tempoSaida, tempo, listaOrdenada)
-                # essa parte abaixo eh omitida nas anotacoes da disciplica, mas eh necessaria para o algoritmo funcionar
-                visitados = result[0]
-                tempoEntrada = result[1]
-                tempoSaida = result[2]
-                tempo = result[3]
-                listaOrdenada = result[4]
+
+        for key in verticeBase.relacoes:
+            # teste para evitar excecoes onde variavel verticeBase eh destino da relacao
+            if verticeBase.relacoes[key].ehVerticeOrigem(verticeBase):
+                v = verticeBase.relacoes[key].obterVerticeDestino(verticeBase)
+                posVertice = v.numero - 1
+                if not visitados[posVertice]:
+                    result = self.dfs_visit(grafo, v, visitados, tempoEntrada, tempoSaida, tempo, listaOrdenada)
+                    # essa parte abaixo eh omitida nas anotacoes da disciplica, mas eh necessaria para o algoritmo funcionar
+                    visitados = result[0]
+                    tempoEntrada = result[1]
+                    tempoSaida = result[2]
+                    tempo = result[3]
+                    listaOrdenada = result[4]
 
         tempo += 1
         tempoSaida[posVerticeOrigem] = tempo # adiciona tempo ao array "tempoFim", na posicao do vertice
-        listaOrdenada.insert(0, verticeOrigem) # insere vertice analisado à esquerda da lista
+        listaOrdenada.insert(0, verticeBase) # insere vertice analisado à esquerda da lista
         # essa retorno eh omitido nas anotacoes da disciplica, mas eh necessaria para o algoritmo funcionar
         return (visitados, tempoEntrada, tempoSaida, tempo, listaOrdenada)
 
