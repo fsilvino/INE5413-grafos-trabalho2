@@ -12,3 +12,6 @@ class Arco(Relacao):
         if (verticeDestino.numero != self.v2.numero):
             raise Exception('O vértice de destino informado não corresponde ao vértice de destino do arco')
         return self.v1
+
+    def ehVerticeOrigem(self, vertice:Vertice):
+        return vertice.numero == self.v1.numero
