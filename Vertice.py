@@ -9,3 +9,6 @@ class Vertice:
 
     def adicionarRelacao(self, relacao: Relacao):
         self.relacoes[relacao.id] = relacao
+
+    def apagarTodasRelacoes(self):
+        self.relacoes = {}

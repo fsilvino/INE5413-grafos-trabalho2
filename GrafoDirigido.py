@@ -16,3 +16,14 @@ class GrafoDirigido(Grafo):
 
     def obterTipoGrafo(self):
         return "Grafo dirigido"
+
+    def criarGrafoTransposto(self):
+        vertices = self.vertices[:] # para nao ficar na mesma posicao de memoria
+        novoGrafo = GrafoDirigido(vertices)
+        for v in novoGrafo.vertices:
+            v.apagarTodasRelacoes()
+
+        for key in self.relacoes:
+            arcoAtual = self.relacoes[key]
+            novoGrafo.adicionarRelacao(arcoAtual.v2, arcoAtual.v1, arcoAtual.peso)
+        return novoGrafo
