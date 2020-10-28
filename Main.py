@@ -6,6 +6,8 @@ from LeitorGrafo import LeitorGrafo
 
 # g = Grafo()
 arquivo = "arquivos-teste/manha_ord_topologica.net"
+arquivo = "arquivos-teste/kruskal.net"
+# arquivo = "arquivos-teste/tcc_completo.net"
 # arquivo = "arquivos-teste/agm_tiny_aresta.net"
 # arquivo = "arquivos-teste/agm_tiny_arco.net"
 global grafo
@@ -101,6 +103,12 @@ def ordenacaoTopologica():
     except Exception as ex:
         print(ex)
 
+def montaArvore():
+    try:
+        exec.montaArvore(grafo)
+    except Exception as ex:
+        print(ex)
+
 # lista com funcoes que serao executadas
 acoes = [
     {"texto": "Carregar um arquivo", "funcao": carregarArquivo},
@@ -112,6 +120,7 @@ acoes = [
     {"texto": "Vizinhos do vértice", "funcao": verVizinhos},
     {"texto": "Verificar se há relacao", "funcao": verificarSeHaRelacao},
     {"texto": "Ordenacao Topologica", "funcao": ordenacaoTopologica},
+    {"texto": "Árvore Geradora Mínima", "funcao": montaArvore}
 ]
 
 user_input = -1

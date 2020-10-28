@@ -1,5 +1,6 @@
 from Grafo import Grafo
 from OrdenacaoTopologica import OrdenacaoTopologica
+from ArvoreGeradoraMinima import ArvoreGeradoraMinima
 
 class GrafoExecutor:
 
@@ -31,3 +32,8 @@ class GrafoExecutor:
         lista = ord.ordenar(grafo)
         ord.show_result(lista)
         # return ord.ordenar(grafo)
+
+    def montaArvore(self, grafo:Grafo):
+        arvore = ArvoreGeradoraMinima()
+        a = arvore.montaArvore(grafo)
+        arvore.show_result(a)
