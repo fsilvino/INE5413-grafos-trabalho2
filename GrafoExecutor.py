@@ -2,7 +2,7 @@ from Grafo import Grafo
 from GrafoDirigido import GrafoDirigido
 from OrdenacaoTopologica import OrdenacaoTopologica
 from ArvoreGeradoraMinima import ArvoreGeradoraMinima
-from Conectividade import Conectividade
+from ComponentesFortementeConexos import ComponentesFortementeConexos
 
 class GrafoExecutor:
 
@@ -41,5 +41,7 @@ class GrafoExecutor:
         arvore.show_result(a)
 
     def conexos(self, grafo:Grafo):
-        con = Conectividade()
-        con.FortementeConexos(grafo)
+        con = ComponentesFortementeConexos()
+        listaAncestrais = con.buscarComponentesFortementeConexos(grafo)
+        arvores = con.buscarArvoresCompFortConexos(listaAncestrais)
+        con.show_result(arvores)
