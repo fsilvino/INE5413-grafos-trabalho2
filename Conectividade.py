@@ -16,7 +16,8 @@ class Conectividade:
 
         result = BuscaProfundidade.dfs(grafoTransposto)
 
-        self.show_result(result[3])
+        lista = self.buscaArvores(result[3])
+        self.show_result(lista)
         # chama busca em profundidade para o grafo transposto, fazendo com que a busca seja feita em ordem descrescente do array tempoFim
         # Ou seja, quando maior o valor de tempoFim para o vertice, antes ele eh visitado
 
@@ -39,32 +40,25 @@ class Conectividade:
         return grafoTransposto
 
 
-    def show_result(self, lista):
-        # para mostrar retorno
-        for v in lista:
-            if v == None:
-                print("None")
-            else:
-                print(v.numero)
+    def x(self, lista, result, raiz, posicao):
+        for i, x in enumerate(lista):
+            if x != None and x.numero == raiz:
+                result[posicao].append(i+1)
+                self.x(lista, result, i+1, posicao)
+        return result
 
-        # algoritmo principal
-        i = 1
+    def buscaArvores(self, lista):
         raizes = []
         result = []
-
-        for v in lista:
+        for i, v in enumerate(lista):
             if v == None:
-                raizes.append(i)
-            i += 1
-        i = 0
-        for raiz in raizes:
-            result.append([])
-            result[i].append(raiz)
-            j = 1
-            for v in lista:
-                if v != None and v.numero == raiz:
-                    result[i].append(j)
-                j += 1
-            i += 1
-        print(raizes)
-        print(result)
+                raizes.append(i+1)
+
+        for i, raiz in enumerate(raizes):
+            result.append([raiz])
+            result= self.x(lista, result, raiz, i)
+        return result
+
+    def show_result(self, lista):
+        for arvore in lista:
+            print(", ".join(map(str, arvore ) ) )
