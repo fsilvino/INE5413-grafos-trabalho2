@@ -1,7 +1,7 @@
 class ArvoreGeradoraMinima:
 
     # utilizando algoritmo de kruskal
-    def montaArvore(self, grafo):
+    def montarArvoreGeradoraMinima(self, grafo):
         # print("Chegou aqui")
         a = []
         s = [None] * grafo.qtdVertices()
@@ -11,9 +11,8 @@ class ArvoreGeradoraMinima:
 
         #traz arestas ordenadas por peso
         arestas = self.ordenarArestas(grafo.relacoes)
-
-        for key in arestas:
-            aresta = arestas[key]
+        for aresta in arestas.values():
+            # aresta = arestas[key]
             verticeOrigem = aresta.v1
             verticeDestino = aresta.obterVerticeDestino(verticeOrigem)
 
@@ -24,9 +23,7 @@ class ArvoreGeradoraMinima:
             if s[posOrigem] != s[posDestino]:
                 a.append(aresta) # adiciona aresta a lista de arestas da agm
 
-
                 novoConj = s[posOrigem] + s[posDestino]
-
                 # ordenacao para coparacao de arrays, pois os "==" compara elemento por elemento
                 novoConj.sort()
 

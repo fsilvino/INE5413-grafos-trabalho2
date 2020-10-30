@@ -35,12 +35,12 @@ class GrafoExecutor:
         ord.show_result(lista)
         # return ord.ordenar(grafo)
 
-    def montaArvore(self, grafo:Grafo):
+    def montarArvoreGeradoraMinima(self, grafo:Grafo):
         arvore = ArvoreGeradoraMinima()
-        a = arvore.montaArvore(grafo)
+        a = arvore.montarArvoreGeradoraMinima(grafo)
         arvore.show_result(a)
 
-    def conexos(self, grafo:Grafo):
+    def buscarComponentesFortementeConexos(self, grafo:Grafo):
         con = ComponentesFortementeConexos()
         listaAncestrais = con.buscarComponentesFortementeConexos(grafo)
         arvores = con.buscarArvoresCompFortConexos(listaAncestrais)

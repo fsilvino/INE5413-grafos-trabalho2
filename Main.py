@@ -7,8 +7,8 @@ from LeitorGrafo import LeitorGrafo
 # g = Grafo()
 # arquivo = "arquivos-teste/manha_ord_topologica.net"
 # arquivo = "arquivos-teste/ord_topologica.net"
-arquivo = "arquivos-teste/fortemente_contexo_aula.net"
-# arquivo = "arquivos-teste/kruskal.net"
+# arquivo = "arquivos-teste/fortemente_contexo_aula.net"
+arquivo = "arquivos-teste/kruskal.net"
 # arquivo = "arquivos-teste/tcc_completo.net"
 # arquivo = "arquivos-teste/agm_tiny_aresta.net"
 # arquivo = "arquivos-teste/agm_tiny_arco.net"
@@ -105,14 +105,17 @@ def ordenacaoTopologica():
     except Exception as ex:
         print(ex)
 
-def montaArvore():
+def montarArvoreGeradoraMinima():
     try:
-        exec.montaArvore(grafo)
+        exec.montarArvoreGeradoraMinima(grafo)
     except Exception as ex:
         print(ex)
 
-def conexos():
-    exec.conexos(grafo)
+def buscarComponentesFortementeConexos():
+    try:
+        exec.buscarComponentesFortementeConexos(grafo)
+    except Exception as ex:
+        print(ex)
 # lista com funcoes que serao executadas
 acoes = [
     {"texto": "Carregar um arquivo", "funcao": carregarArquivo},
@@ -123,9 +126,9 @@ acoes = [
     {"texto": "Rótulo do vértice", "funcao": verRotulo},
     {"texto": "Vizinhos do vértice", "funcao": verVizinhos},
     {"texto": "Verificar se há relacao", "funcao": verificarSeHaRelacao},
-    {"texto": "Fortemente Conexoss", "funcao": conexos},
+    {"texto": "Componentes Fortemente Conexos", "funcao": buscarComponentesFortementeConexos},
     {"texto": "Ordenacao Topologica", "funcao": ordenacaoTopologica},
-    {"texto": "Árvore Geradora Mínima", "funcao": montaArvore}
+    {"texto": "Árvore Geradora Mínima", "funcao": montarArvoreGeradoraMinima}
 ]
 
 user_input = -1
