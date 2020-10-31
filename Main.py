@@ -1,7 +1,19 @@
-from Grafo import Grafo
+# from Grafo import Grafo
 from GrafoExecutor import GrafoExecutor
+from GrafoDirigido import GrafoDirigido
+from GrafoNaoDirigido import GrafoNaoDirigido
+from LeitorGrafo import LeitorGrafo
 
-g = Grafo()
+# g = Grafo()
+# arquivo = "arquivos-teste/manha_ord_topologica.net"
+# arquivo = "arquivos-teste/ord_topologica.net"
+# arquivo = "arquivos-teste/fortemente_contexo_aula.net"
+arquivo = "arquivos-teste/kruskal.net"
+# arquivo = "arquivos-teste/tcc_completo.net"
+# arquivo = "arquivos-teste/agm_tiny_aresta.net"
+# arquivo = "arquivos-teste/agm_tiny_arco.net"
+global grafo
+grafo = LeitorGrafo.lerGrafoDoArquivo(arquivo)
 exec = GrafoExecutor()
 
 def solicitarOpcao(texto, min, max, maxTentativas = 3):
@@ -37,8 +49,8 @@ def carregarArquivo():
     try:
         if arquivo == "":
             arquivo = arquivoPadrao
-
-        g.lerArquivo(arquivo)
+        global grafo
+        grafo = LeitorGrafo.lerGrafoDoArquivo(arquivo)
         print("Arquivo " + arquivo + " carregado com sucesso.")
     except Exception as ex:
         print("Não foi possível ler o arquivo!")
@@ -47,47 +59,63 @@ def carregarArquivo():
 def mostrarGrafo():
     try:
         print('Mostrando o grafo:')
-        g.mostrarGrafo()
+        grafo.mostrarGrafo()
     except Exception as ex:
         print(ex)
 
 
 def mostrarQtdVertices():
-    numVertices = exec.qtdVertices(g)
+    numVertices = exec.qtdVertices(grafo)
     print("O grafo tem " + str(numVertices) + " vertices.")
 
 def mostrarQtdRelacoes():
-    numRelacoes = exec.qtdRelacoes(g)
+    numRelacoes = exec.qtdRelacoes(grafo)
     print("O grafo tem " + str(numRelacoes) + " arestas.")
 
 def verGrau():
     v = solicitarVertice()
     if v > 0:
-        grau = exec.grau(g, v)
+        grau = exec.grau(grafo, v)
         print(f'Grau do vértice {v}:', grau)
 
 def verRotulo():
     v = solicitarVertice()
     if v > 0:
-        rotulo = exec.rotulo(g, v)
+        rotulo = exec.rotulo(grafo, v)
         print(f'Rótulo do vértice {v}:', rotulo)
 
 def verVizinhos():
     v = solicitarVertice()
     if v > 0:
-        vizinhos = exec.vizinhos(g, v)
+        vizinhos = exec.vizinhos(grafo, v)
         print(f'Vizinhos do vértice {v}:', ", ".join(map(lambda v: str(v.numero), vizinhos)))
 
 def verificarSeHaRelacao():
     v = solicitarVertice("Digite o número do primeiro vértice: ")
     u = solicitarVertice("Digite o número do segundo vértice: ")
     if v > 0 and u > 0:
-        haRelacao = exec.haRelacao(g, u, v)
+        haRelacao = exec.haRelacao(grafo, u, v)
         nao = "" if haRelacao else " não"
         print(f'O vértice {v}{nao} possui uma relacao para {u}')
 
 
+def ordenacaoTopologica():
+    try:
+        exec.ordenacaoTopologica(grafo)
+    except Exception as ex:
+        print(ex)
 
+def montarArvoreGeradoraMinima():
+    try:
+        exec.montarArvoreGeradoraMinima(grafo)
+    except Exception as ex:
+        print(ex)
+
+def buscarComponentesFortementeConexos():
+    try:
+        exec.buscarComponentesFortementeConexos(grafo)
+    except Exception as ex:
+        print(ex)
 # lista com funcoes que serao executadas
 acoes = [
     {"texto": "Carregar um arquivo", "funcao": carregarArquivo},
@@ -98,25 +126,29 @@ acoes = [
     {"texto": "Rótulo do vértice", "funcao": verRotulo},
     {"texto": "Vizinhos do vértice", "funcao": verVizinhos},
     {"texto": "Verificar se há relacao", "funcao": verificarSeHaRelacao},
+    {"texto": "Componentes Fortemente Conexos", "funcao": buscarComponentesFortementeConexos},
+    {"texto": "Ordenacao Topologica", "funcao": ordenacaoTopologica},
+    {"texto": "Árvore Geradora Mínima", "funcao": montarArvoreGeradoraMinima}
 ]
 
 user_input = -1
 while user_input != 0:
-    print()
-    print("Menu: ")
-    for i, acao in enumerate(acoes):
-        print(str(i + 1) +" - " + acao["texto"])
-    print("0 - Finalizar o programa")
-    print()
 
-    user_input = solicitarOpcao("Digite a opção desejada: ", 0, len(acoes))
-    print()
-    if user_input > 0:
-        acoes[user_input - 1]["funcao"]()
         print()
-        input('Pressione ENTER para continuar...')
-    else:
-        user_input = 0
+        print("Menu: ")
+        for i, acao in enumerate(acoes):
+            print(str(i + 1) +" - " + acao["texto"])
+        print("0 - Finalizar o programa")
+        print()
+
+        user_input = solicitarOpcao("Digite a opção desejada: ", 0, len(acoes))
+        print()
+        if user_input > 0:
+            acoes[user_input - 1]["funcao"]()
+            print()
+            input('Pressione ENTER para continuar...')
+        else:
+            user_input = 0
 
 # fim while
 print()

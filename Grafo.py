@@ -6,7 +6,7 @@ from Arco import Arco
 class Grafo(ABC):
 
     def __init__(self, vertices):
-        self.vertices = vertices
+        self.vertices = vertices # tipo vetor
         self.relacoes = {}
 
     @abstractmethod
@@ -23,7 +23,7 @@ class Grafo(ABC):
 
     def qtdVertices(self):
         return len(self.vertices)
-    
+
     def qtdArestas(self):
         return len(self.relacoes)
 
