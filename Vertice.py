@@ -1,4 +1,3 @@
-from Aresta import Aresta
 from Relacao import Relacao
 
 class Vertice:
@@ -10,3 +9,6 @@ class Vertice:
 
     def adicionarRelacao(self, relacao: Relacao):
         self.relacoes[relacao.id] = relacao
+
+    def apagarTodasRelacoes(self):
+        self.relacoes = {}

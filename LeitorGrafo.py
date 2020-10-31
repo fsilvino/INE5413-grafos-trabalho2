@@ -24,7 +24,7 @@ class LeitorGrafo:
         LeitorGrafo.__lerRelacoes(linhas[numeroDeVertices + 2:], grafo)
         return grafo
     lerGrafoDoArquivo = staticmethod(lerGrafoDoArquivo)
-        
+
     def __lerVertices(linhas):
         numeroDeVertices = int(linhas[0].split(" ")[1])
         vertices = []
