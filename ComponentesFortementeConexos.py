@@ -1,8 +1,10 @@
 from BuscaProfundidade import BuscaProfundidade
+from GrafoDirigido import GrafoDirigido
+
 class ComponentesFortementeConexos:
 
-    def buscarComponentesFortementeConexos(self, grafo):
-        if grafo.obterTipoGrafo() != 'Grafo dirigido':
+    def buscarComponentesFortementeConexos(grafo: GrafoDirigido):
+        if type(grafo) is not GrafoDirigido:
             raise Exception("Busca por componentes fortemente conexos funciona apenas com grafos dirigidos.")
 
         resultBuscaProf = BuscaProfundidade.dfs(grafo) #realiza busca em BuscaProfundidade
@@ -12,50 +14,41 @@ class ComponentesFortementeConexos:
         # ancestrais = resultBuscaProf[3] # A', nas anotacoes da disciplina
 
         grafoTransposto = grafo.criarGrafoTransposto()
-        grafoTransposto = self.ordenarVerticesPorTempoSaidaDec(grafoTransposto, tempoSaida)
+        ComponentesFortementeConexos.__ordenarVerticesPorTempoSaidaDec(grafoTransposto, tempoSaida)
 
         resultBuscaProfTransposta = BuscaProfundidade.dfs(grafoTransposto)
-        return resultBuscaProfTransposta[3]
-
-    def ordenarVerticesPorTempoSaidaDec(self, grafoTransposto, tempoSaida):
-        tempoFimDict = {}
-        for i in range(0, len(tempoSaida)):
-            tempoFimDict[i+1] = tempoSaida[i]
-
-        listaChavesOrdenadas = sorted(tempoFimDict, key= lambda d: tempoFimDict[d], reverse=True)
-
-        tempoFimDictOrdenado = {}
-        for key in listaChavesOrdenadas:
-            tempoFimDictOrdenado[key] = tempoFimDict[key]
-        numVertOrdenados = list(tempoFimDictOrdenado)
-
-        verticesOrdenados = []
-        for i in numVertOrdenados:
-            verticesOrdenados.append(grafoTransposto.vertices[i-1])
-
-        grafoTransposto.vertices = verticesOrdenados
-        return grafoTransposto
+        return ComponentesFortementeConexos.__buscarArvoresCompFortConexos(resultBuscaProfTransposta[3])
 
 
-    def buscarProximoVertice(self, ancestrais, arvores, raiz, posicaoArvore):
-        for i, vertice in enumerate(ancestrais):
-            if vertice != None and vertice.numero == raiz:
-                arvores[posicaoArvore].append(i+1)
-                self.buscarProximoVertice(ancestrais, arvores, i+1, posicaoArvore)
-        return arvores
+    def __ordenarVerticesPorTempoSaidaDec(grafoTransposto, tempoSaida):
+        verticesComTempo = map(lambda t, v: (t, v), tempoSaida, grafoTransposto.vertices)
+        verticesComTempoDesc = sorted(verticesComTempo, key=lambda x: x[0], reverse=True)
+        grafoTransposto.vertices = list(map(lambda x: x[1], verticesComTempoDesc))
 
-    def buscarArvoresCompFortConexos(self, ancestrais):
-        raizes = []
-        arvores = []
+
+    def __buscarArvoresCompFortConexos(ancestrais):
+        # inverte a lógica da estrutura, gerando um dicionário cuja chave é o "pai" e o valor é o "filho"
+        descendentes = dict([(v.numero if v != None else -1, i + 1) for i, v in enumerate(ancestrais)])
+        componentes = []
         for i, vertice in enumerate(ancestrais):
             if vertice == None:
-                raizes.append(i+1)
+                componente = []
+                v = i + 1
+                componente.append(v)
+                while v in descendentes: # se v possui filho, adiciona ele na lista da componente e verifica o filho dele
+                    v = descendentes[v]
+                    componente.append(v)
+                componentes.append(componente)
+        return componentes
 
-        for i, raiz in enumerate(raizes):
-            arvores.append([raiz])
-            arvores = self.buscarProximoVertice(ancestrais, arvores, raiz, i)
-        return arvores
 
-    def show_result(self, arvores):
-        for arvore in arvores:
-            print(", ".join(map(str, arvore ) ) )
+    def mostrarComponentes(componentes):
+        for componente in componentes:
+            print(", ".join(map(str, componente)))
+
+            
+
+    buscarComponentesFortementeConexos = staticmethod(buscarComponentesFortementeConexos)
+    __ordenarVerticesPorTempoSaidaDec = staticmethod(__ordenarVerticesPorTempoSaidaDec)
+    __buscarArvoresCompFortConexos = staticmethod(__buscarArvoresCompFortConexos)
+    mostrarComponentes= staticmethod(mostrarComponentes)

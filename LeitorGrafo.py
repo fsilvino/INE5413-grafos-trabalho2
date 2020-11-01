@@ -23,7 +23,6 @@ class LeitorGrafo:
 
         LeitorGrafo.__lerRelacoes(linhas[numeroDeVertices + 2:], grafo)
         return grafo
-    lerGrafoDoArquivo = staticmethod(lerGrafoDoArquivo)
 
     def __lerVertices(linhas):
         numeroDeVertices = int(linhas[0].split(" ")[1])
@@ -38,8 +37,6 @@ class LeitorGrafo:
             vertices.append(Vertice(numeroVertice, rotulo))
         return vertices
 
-    __lerVertices = staticmethod(__lerVertices)
-
 
     def __lerRelacoes(linhas, grafo: Grafo):
         for linha in linhas:
@@ -50,4 +47,8 @@ class LeitorGrafo:
             if (len(valores) >= 3):
                 peso = float(valores[2])
             grafo.adicionarRelacao(v1, v2, peso)
+
+
+    lerGrafoDoArquivo = staticmethod(lerGrafoDoArquivo)
+    __lerVertices = staticmethod(__lerVertices)
     __lerRelacoes = staticmethod(__lerRelacoes)

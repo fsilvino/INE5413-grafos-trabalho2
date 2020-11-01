@@ -20,10 +20,17 @@ class GrafoDirigido(Grafo):
     def criarGrafoTransposto(self):
         vertices = self.vertices[:] # para nao ficar na mesma posicao de memoria
         novoGrafo = GrafoDirigido(vertices)
+
         for v in novoGrafo.vertices:
             v.apagarTodasRelacoes()
 
-        for key in self.relacoes:
-            arcoAtual = self.relacoes[key]
-            novoGrafo.adicionarRelacao(arcoAtual.v2, arcoAtual.v1, arcoAtual.peso)
+        for arco in self.relacoes.values():
+            novoGrafo.adicionarRelacao(arco.v2, arco.v1, arco.peso)
+
         return novoGrafo
+
+    def mostrarGrafo(self):
+        print(self.obterTipoGrafo())
+        for v in self.vertices:
+            saintes = filter(lambda r: r.ehVerticeOrigem(v), v.relacoes.values())
+            print(str(v.numero) + ": ", ", ".join(map(lambda r: str(r.obterVerticeDestino(v).numero), saintes)))
