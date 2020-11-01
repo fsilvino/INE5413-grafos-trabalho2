@@ -1,20 +1,8 @@
-# from Grafo import Grafo
+from Grafo import Grafo
 from GrafoExecutor import GrafoExecutor
-from GrafoDirigido import GrafoDirigido
-from GrafoNaoDirigido import GrafoNaoDirigido
 from LeitorGrafo import LeitorGrafo
 
-# g = Grafo()
-# arquivo = "arquivos-teste/manha_ord_topologica.net"
-# arquivo = "arquivos-teste/ord_topologica.net"
-# arquivo = "arquivos-teste/fortemente_contexo_aula.net"
-arquivo = "arquivos-teste/kruskal.net"
-# arquivo = "arquivos-teste/tcc_completo.net"
-# arquivo = "arquivos-teste/agm_tiny_aresta.net"
-# arquivo = "arquivos-teste/agm_tiny_arco.net"
-global grafo
-grafo = LeitorGrafo.lerGrafoDoArquivo(arquivo)
-exec = GrafoExecutor()
+grafo: Grafo
 
 def solicitarOpcao(texto, min, max, maxTentativas = 3):
     tentativas = 1
@@ -34,7 +22,7 @@ def solicitarOpcao(texto, min, max, maxTentativas = 3):
 
 def solicitarVertice(texto="Digite o número do vertice: "):
     try:
-        v = solicitarOpcao(texto, 1, exec.qtdVertices(g))
+        v = solicitarOpcao(texto, 1, grafo.qtdVertices())
         if v > 0:
             return v
         else:
@@ -44,7 +32,13 @@ def solicitarVertice(texto="Digite o número do vertice: "):
         return 0
 
 def carregarArquivo():
-    arquivoPadrao = "grafo.teste.net"
+    # arquivoPadrao = "arquivos-teste/manha_ord_topologicaCorrigido.net"
+    # arquivoPadrao = "arquivos-teste/ord_topologica.net"
+    arquivoPadrao = "arquivos-teste/fortemente_contexo_aula.net"
+    # arquivoPadrao = "arquivos-teste/kruskal.net"
+    # arquivoPadrao = "arquivos-teste/tcc_completo.net"
+    # arquivoPadrao = "arquivos-teste/agm_tiny_aresta.net"
+    # arquivoPadrao = "arquivos-teste/agm_tiny_arco.net"
     arquivo = input("Digite o nome do arquivo (em branco carrega " + arquivoPadrao + "): ")
     try:
         if arquivo == "":
@@ -65,55 +59,55 @@ def mostrarGrafo():
 
 
 def mostrarQtdVertices():
-    numVertices = exec.qtdVertices(grafo)
+    numVertices = grafo.qtdVertices()
     print("O grafo tem " + str(numVertices) + " vertices.")
 
 def mostrarQtdRelacoes():
-    numRelacoes = exec.qtdRelacoes(grafo)
+    numRelacoes = grafo.qtdRelacoes()
     print("O grafo tem " + str(numRelacoes) + " arestas.")
 
 def verGrau():
     v = solicitarVertice()
     if v > 0:
-        grau = exec.grau(grafo, v)
+        grau = grafo.grau(v)
         print(f'Grau do vértice {v}:', grau)
 
 def verRotulo():
     v = solicitarVertice()
     if v > 0:
-        rotulo = exec.rotulo(grafo, v)
+        rotulo = grafo.rotulo(v)
         print(f'Rótulo do vértice {v}:', rotulo)
 
 def verVizinhos():
     v = solicitarVertice()
     if v > 0:
-        vizinhos = exec.vizinhos(grafo, v)
+        vizinhos = grafo.vizinhos(v)
         print(f'Vizinhos do vértice {v}:', ", ".join(map(lambda v: str(v.numero), vizinhos)))
 
 def verificarSeHaRelacao():
     v = solicitarVertice("Digite o número do primeiro vértice: ")
     u = solicitarVertice("Digite o número do segundo vértice: ")
     if v > 0 and u > 0:
-        haRelacao = exec.haRelacao(grafo, u, v)
+        haRelacao = grafo.haRelacao(u, v)
         nao = "" if haRelacao else " não"
         print(f'O vértice {v}{nao} possui uma relacao para {u}')
 
 
 def ordenacaoTopologica():
     try:
-        exec.ordenacaoTopologica(grafo)
+        GrafoExecutor.ordenacaoTopologica(grafo)
     except Exception as ex:
         print(ex)
 
 def montarArvoreGeradoraMinima():
     try:
-        exec.montarArvoreGeradoraMinima(grafo)
+        GrafoExecutor.montarArvoreGeradoraMinima(grafo)
     except Exception as ex:
         print(ex)
 
 def buscarComponentesFortementeConexos():
     try:
-        exec.buscarComponentesFortementeConexos(grafo)
+        GrafoExecutor.buscarComponentesFortementeConexos(grafo)
     except Exception as ex:
         print(ex)
 # lista com funcoes que serao executadas

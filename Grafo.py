@@ -34,6 +34,4 @@ class Grafo(ABC):
         pass
 
     def mostrarGrafo(self):
-        print(self.obterTipoGrafo())
-        for v in self.vertices:
-            print(str(v.numero) + ": " + ", ".join(map(lambda r: str(r.obterVerticeDestino(v).numero), v.relacoes.values())))
+        pass
